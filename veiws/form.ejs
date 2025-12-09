@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput">
+    </form>
+    <img id="imageId">
+    
+</body>
+<script>
+    const input=document.getElementById('itemImageInput')
+    input.addEventListener('change',(item)=>{
+        
+         const img = item.target.files[0]
+         if(!img){
+            console.log("img does not exist ")
+            return
+         }
+         console.log(img)
+         const imgUrl = URL.createObjectURL(img)
+
+         document.getElementById('imageId').src = imgUrl
+
+    })
+    
+
+</script>
+
+</html>
