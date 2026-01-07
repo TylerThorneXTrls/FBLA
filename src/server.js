@@ -26,3 +26,13 @@ app.get("/form", (req, res) => {
 app.listen(port, (req, res) => {
     console.log("server is working")
 })
+app.post('/form', (req, res) => {
+
+    const { data } = req.body
+    console.log(req.body)
+
+    res.json({
+        succes: true,
+        message:"succesfull"
+    })
+})

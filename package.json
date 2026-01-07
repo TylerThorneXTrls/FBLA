@@ -1,0 +1,25 @@
+{
+  "name": "fbla",
+  "version": "1.0.0",
+  "description": "Tic-Tac-Toe game with SQLite",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "FBLA"
+  ],
+  "author": "West-MEC",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.0.0",
+    "uuid": "^13.0.0"
+  }
+}

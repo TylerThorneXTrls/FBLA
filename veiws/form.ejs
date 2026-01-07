@@ -6,28 +6,57 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
+    <form id="form">
         <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput">
+
+
+        <button onclick= "submit"></button>
     </form>
     <img id="imageId">
     
 </body>
 <script>
-    const input=document.getElementById('itemImageInput')
+    const input=document.getElementById('itemImageInput');
     input.addEventListener('change',(item)=>{
         
          const img = item.target.files[0]
          if(!img){
-            console.log("img does not exist ")
+            console.log("img does not exist ");
             return
          }
-         console.log(img)
-         const imgUrl = URL.createObjectURL(img)
+         console.log(img);
+         const imgUrl = URL.createObjectURL(img);
 
-         document.getElementById('imageId').src = imgUrl
+         document.getElementById('imageId').src = imgUrl;
 
     })
+    const form = document.getElementById('form');
+    form.addEventListener('submit' ,async()=> {
+        const data = new FormData(this)
+        try{
+
+            fetch('/form',{
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(data),
+            })
+            const data =  await response.json()
+            
+            if(data.succes){
+                console.log(succes)
+            }
+        } 
+        catch(err){
+            console.log(err)
+
+
+        }  
+    }
+)
     
+
+
+
 
 </script>
 
