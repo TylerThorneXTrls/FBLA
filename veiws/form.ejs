@@ -6,11 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="form">
+    <form id="form" enctype="multipart/form-data">
         <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput">
 
 
-        <button onclick= "submit"></button>
+        <button type= "submit">submit</button>
     </form>
     <img id="imageId">
     
@@ -32,13 +32,13 @@
     })
     const form = document.getElementById('form');
     form.addEventListener('submit' ,async()=> {
-        const data = new FormData(this)
+        const data = new FormData(form)
         try{
 
             fetch('/form',{
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(data),
+                  body: data,
             })
             const data =  await response.json()
             
