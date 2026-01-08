@@ -8,6 +8,7 @@
 <body>
     <form id="form" enctype="multipart/form-data">
         <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput">
+        <input type="text" name = "name" id="name" placeholder="Your Name">
 
 
         <button type= "submit">submit</button>
@@ -32,18 +33,20 @@
     })
     const form = document.getElementById('form');
     form.addEventListener('submit' ,async()=> {
-        const data = new FormData(form)
+        event.preventDefault()
+        const formData = new FormData(form)
         try{
 
-            fetch('/form',{
+            const response = await fetch('/form',{
                   method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: data,
+                  body: formData,
             })
-            const data =  await response.json()
+            const data =  await response.json(
+
+            )
             
-            if(data.succes){
-                console.log(succes)
+            if(data.success){
+                console.log(success)
             }
         } 
         catch(err){

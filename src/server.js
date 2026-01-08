@@ -1,6 +1,17 @@
 const express = require('express')
 const multer = require('multer');
 
+const storage = multer.diskStorage({
+    destination :function(req,file,cb){cb(null, './public/uploads');
+    }
+    , filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Generate a unique filename
+  }
+});
+
+const upload = multer({ storage: storage });
+
+
 
 
 const app = express()
@@ -30,13 +41,23 @@ app.get("/form", (req, res) => {
 app.listen(port, (req, res) => {
     console.log("server is working")
 })
-app.post('/form', (req, res) => {
-
+app.post('/form',upload.single('itemImageInput'), (req, res) => {
+   try{
     const { data } = req.body
     console.log(req.body)
+    if (req.file) {
+        res.json({
+            succes: true,
+            message:"succesfull"
+        })
+    }
+    else {
+        res.send("no file has been sent")
+        }
+    }
+   catch (err) {
+       console.log(err)
+    }
 
-    res.json({
-        succes: true,
-        message:"succesfull"
-    })
+    
 })
