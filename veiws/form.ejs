@@ -7,12 +7,17 @@
 </head>
 <body>
     <form id="form" enctype="multipart/form-data">
+        <label for="itemImageInput">Upload Image</label>
         <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput">
+        <label for="itemName">name of item</label>
+        <input type="text" name = "itemName" id="itemName" placeholder="Item Name">
+        <label for="name">person name</label>
         <input type="text" name = "name" id="name" placeholder="Your Name">
 
 
         <button type= "submit">submit</button>
     </form>
+    <p id="success"></p>
     <img id="imageId">
     
 </body>
@@ -46,7 +51,8 @@
             )
             
             if(data.success){
-                console.log(success)
+                console.log('success')
+                document.getElementById('success').innerText = "succesfully submitted"
             }
         } 
         catch(err){
