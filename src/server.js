@@ -1,13 +1,14 @@
 const express = require('express')
 const multer = require('multer');
+const fs = require('fs')
 require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
-    console.log("connected mongoDB")
+    console.log("connected to mongodb")
 })
 .catch((err) => {
-    console.log('mongoDB',err)
+    console.log('error:',err)
 })
 
 const itemSchematic = new mongoose.Schema({
@@ -59,7 +60,7 @@ app.get("/form", (req, res) => {
 app.listen(port, (req, res) => {
     console.log("server is working")
 })
-app.post('/form',upload.single('itemImageInput'), (req, res) => {
+app.post('/form',upload.single('itemImageInput'), async(req, res) => {
    try{
     const {itemName,name  } = req.body
     console.log(itemName,name)
@@ -70,25 +71,37 @@ app.post('/form',upload.single('itemImageInput'), (req, res) => {
             itemImage: req.file.path,
             itemID: Date.now().toString()
         })
-        newItem.save()
+        const save = await newItem.save().then(
+        console.log("item save"))
         res.json({
             success: true,
             message:"succesfull"
         })
     }
     else {
-        res.send("no file has been sent")
+        res.json(
+            {succes:false,
+            message: "no file has been sent"}
+        )
         }
     }
    catch (err) {
        console.log(err)
+       res.json({
+           success: false,
+           message:"error when uplaoding"
+       })
     }
 
     
 })
 app.delete('/delete/:itemID', async (req, res) => {
-    const {itemID} = req.params
-    await item.deleteOne({itemID:itemID})
+    const { itemID } = req.params
+    console.log(itemID)
+    const {personName,itemName, itemImage,itemId } = item.find({itemID:itemID })
+    console.log(itemImage)
+    await item.deleteOne({ itemID: itemID })
+    fs.unlink(itemImage)
     res.json({
         success:true,
         message:" deleted"

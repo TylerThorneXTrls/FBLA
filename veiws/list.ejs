@@ -16,8 +16,9 @@
 
             </ul>
         </nav>
+        <% console.log(items)%>
         
-        <% items.forEach((item)=>{%>
+        <% items.forEach((items)=>{%>
         <% const imgUrl = item.img? URL.createObjectURL(item.img):null    %> 
             <div>
                 <h2><%=item.itemName %></h2>
