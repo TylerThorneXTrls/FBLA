@@ -16,14 +16,22 @@
 
             </ul>
         </nav>
-        <% console.log(items)%>
         
-        <% items.forEach((items)=>{%>
-        <% const imgUrl = item.img? URL.createObjectURL(item.img):null    %> 
-            <div>
-                <h2><%=item.itemName %></h2>
-            </div>
-        <%})%>
+      <% items.forEach(item => { %>
+  <div style="margin-bottom: 20px;">
+    <h2>Item: <%= item.itemName %></h2>
+    <p>Found by: <%= item.personName %></p>
+
+    <img 
+      src="/<%= item.itemImage %>" 
+      alt="item image"
+      style="width:200px; height:auto;"
+    >
+  </div>
+<% }) %>
+
+
+ 
         <div>
         
         </div>

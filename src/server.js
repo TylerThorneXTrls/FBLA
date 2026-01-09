@@ -1,8 +1,10 @@
 const express = require('express')
 const multer = require('multer');
+const path = require('path');
 const fs = require('fs')
 require('dotenv').config();
 const mongoose = require('mongoose');
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("connected to mongodb")
@@ -21,7 +23,7 @@ const itemSchematic = new mongoose.Schema({
 const item = mongoose.model("Item", itemSchematic)
 
 const storage = multer.diskStorage({
-    destination :function(req,file,cb){cb(null, './public/uploads');
+    destination :function(req,file,cb){cb(null, './uploads');
     }
     , filename: function (req, file, cb) {
     cb(null ,Date.now() + '-' + file.originalname); 
@@ -37,12 +39,8 @@ const app = express()
 app.use(express.json())
 app.set('view engine', 'ejs')
 app.set('views', './veiws')
-const data = [
-    {
-        itemName: "watch",
-        
-     }
-]
+
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 
 
@@ -51,11 +49,12 @@ const port = 5000
 app.get("/", (req, res) => {
     res.render('index')
 })
-app.get("/list", (req, res) => {
+app.get("/list", async (req, res) => {
+    const data = await item.find({})
     res.render('list',{items:data})
 })
 app.get("/form", (req, res) => {
-    res.render('form',{items:data})
+    res.render('form')
 })
 app.listen(port, (req, res) => {
     console.log("server is working")
@@ -98,10 +97,26 @@ app.post('/form',upload.single('itemImageInput'), async(req, res) => {
 app.delete('/delete/:itemID', async (req, res) => {
     const { itemID } = req.params
     console.log(itemID)
-    const {personName,itemName, itemImage,itemId } = item.find({itemID:itemID })
-    console.log(itemImage)
-    await item.deleteOne({ itemID: itemID })
-    fs.unlink(itemImage)
+    const foundItem = await item.findOne({ itemID })
+    console.log(foundItem)
+    if (!foundItem) {
+    return res.status(404).json({ success: false, message: "Item is not found" })
+    }
+    const itemImage = foundItem.itemImage
+
+    
+    fs.promises.unlink(itemImage)
+    await item.deleteOne({ itemID: foundItem.itemID })
+    res.json({
+        success:true,
+        message:" deleted"
+    })
+})
+app.delete('/deleteAll', async (req, res) => {
+        const uploadsPath = path.join(__dirname,'..', 'uploads');
+        await fs.promises.rm(uploadsPath, { recursive: true, force: true });
+        fs.mkdirSync(uploadsPath);
+         await item.deleteMany({});
     res.json({
         success:true,
         message:" deleted"
