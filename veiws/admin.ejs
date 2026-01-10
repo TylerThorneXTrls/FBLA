@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="main">
+        <nav class="navBar">
+            <ul>
+                <li><a href="http://localhost:5000/form">form</a></li>
+                <li><a href="http://localhost:5000/list">list</a></li>
+            </ul>
+        </nav>
+        <form>
+            <label for="admin"></label>
+            <input type="text" id="text">
+            <button type="submit"></button>
+        </form>
+        <% if(result.succes=true){%>
+            <% items.forEach(item => { %>
+                <div style="margin-bottom: 20px;">
+                  <h2>Item: <%= item.itemName %></h2>
+                  <p>Found by: <%= item.personName %></p>
+              
+                  <img 
+                    src="/<%= item.itemImage %>" 
+                    alt="item image"
+                    style="width:200px; height:auto;"
+                  >
+                </div>
+              <% }) %>
+
+            <%}%>
+
+        
+    </div>
+    <div class=""></div>
+    <footer><a href="github.com/TylerThorneXtrls"><i class="bi bi-github"></i></a></footer>
+</body>
+<script>
+    
+    const form = document.getElementById("form")
+    form.addEventListener('submit', async ()=>{
+        preventDefault()
+        const formData = new FormData(form)
+
+        const result =  await fetch('/admin',
+            {
+                method:"POST",
+                body:formData
+
+            }
+        )
+        if(result.succes=true){
+
+
+
+
+        }
+        
+
+    })
+</script>
+</html>

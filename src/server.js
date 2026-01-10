@@ -5,6 +5,8 @@ const fs = require('fs')
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("connected to mongodb")
@@ -36,6 +38,8 @@ const upload = multer({ storage: storage });
 
 
 const app = express()
+app.use(express.static(path.join(__dirname, '..','styles',)));
+
 app.use(express.json())
 app.set('view engine', 'ejs')
 app.set('views', './veiws')
@@ -56,6 +60,10 @@ app.get("/list", async (req, res) => {
 app.get("/form", (req, res) => {
     res.render('form')
 })
+app.get("/admin", (req, res) => {
+    res.render('form')
+})
+
 app.listen(port, (req, res) => {
     console.log("server is working")
 })
