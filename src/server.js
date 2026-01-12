@@ -19,7 +19,9 @@ const itemSchematic = new mongoose.Schema({
     personName:{type:String, required:true},
     itemName:{type:String, required:true},
     itemImage:{type:String, required:true},
-    itemID:{type:String, required:true}
+    itemID:{type:String, required:true},
+    itemDescription:{type:String, required:false},
+    ContactInfo:{type:String, required:true}
     
 })
 const item = mongoose.model("Item", itemSchematic)
@@ -38,8 +40,7 @@ const upload = multer({ storage: storage });
 
 
 const app = express()
-app.use(express.static(path.join(__dirname, '..','styles',)));
-
+app.use('/styles', express.static(path.join(__dirname, '..', 'styles')));
 app.use(express.json())
 app.set('view engine', 'ejs')
 app.set('views', './veiws')
@@ -76,7 +77,9 @@ app.post('/form',upload.single('itemImageInput'), async(req, res) => {
             personName: req.body.name,
             itemName: req.body.itemName,
             itemImage: req.file.path,
-            itemID: Date.now().toString()
+            itemID: Date.now().toString(),
+            itemDescription: req.body.description,
+            ContactInfo: req.body.ContactInfo
         })
         const save = await newItem.save().then(
         console.log("item save"))

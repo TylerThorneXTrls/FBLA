@@ -1,0 +1,65 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.main {
+  flex: 1; 
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f3f4f6; 
+}
+
+.navBar {
+  width: 100%;
+  background-color: #111827; 
+  padding: 16px 40px;
+  box-sizing: border-box;
+}
+
+.navBar ul {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+}
+
+.navBar a {
+  color: #f9fafb;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: background-color 0.2s ease;
+}
+
+.navBar a:hover {
+  background-color: #374151;
+}
+
+footer {
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  background-color: #111827;
+}
+
+footer a {
+  color: #f9fafb;
+  font-size: 28px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+footer a:hover {
+  color: #9ca3af;
+  transform: scale(1.1);
+}

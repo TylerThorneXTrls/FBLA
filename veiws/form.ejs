@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="../styles/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/form.css">
+
 </head>
 <body>
     <div class="main">
@@ -12,20 +14,26 @@
             <ul>
                 <li><a href="http://localhost:5000/form">form</a></li>
                 <li><a href="http://localhost:5000/list">list</a></li>
+                <li><a href="http://localhost:5000">Home</a></li>
+
             </ul>
         </nav>
 
 
     <form id="form" enctype="multipart/form-data">
         <label for="itemImageInput">Upload Image</label>
-        <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput">
+        <input type="file" accept="image/*" name="itemImageInput" id="itemImageInput" required>
         <label for="itemName">name of item</label>
-        <input type="text" name = "itemName" id="itemName" placeholder="Item Name">
+        <input type="text" name = "itemName" id="itemName" placeholder="Item Name" required>
         <label for="name">person name</label>
-        <input type="text" name = "name" id="name" placeholder="Your Name">
+        <input type="text" name = "name" id="name" placeholder="Your Name" required>
+        <label for="name">item description</label>
+        <input type="text" name = "description" id="description" placeholder="location found">
+        <label for ="ContactInfo">Contact Info insert phone number or email</label>
+        <input type="text" name="ContactInfo" id="ContactInfo" placeholder="Contact Info" required>
 
 
-        <button type= "submit">submit</button>
+        <button id="submitButton" type= "submit">submit</button>
     </form>
     <p id="success"></p>
     <img id="imageId">
@@ -67,6 +75,8 @@
         } 
         catch(err){
             console.log(err)
+            document.getElementById('success').innerText = err.message
+
 
 
         }  

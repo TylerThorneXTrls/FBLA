@@ -6,3 +6,13 @@ DELETE http://localhost:5000/delete/1767903776017
 ### delete alll
 
 DELETE http://localhost:5000/deleteAll
+
+### create new admin acount
+
+POST http://localhost:5000/createAdmin
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"password123"
+}

@@ -1,0 +1,42 @@
+#heroImg {
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url("images/Lost\ and\ Found.jpg")
+      center / cover no-repeat;
+}
+
+#heroImg h1 {
+  color: #f9fafb;
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+footer {
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #111827;
+}
+
+footer a {
+  color: #f9fafb;
+  font-size: 28px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+footer a:hover {
+  color: #9ca3af;
+  transform: scale(1.1);
+}
