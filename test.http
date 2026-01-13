@@ -16,3 +16,13 @@ Content-Type: application/json
     "username":"admin",
     "password":"password123"
 }
+
+### login to account
+
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"password123"
+}

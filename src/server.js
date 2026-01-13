@@ -4,8 +4,9 @@ const path = require('path');
 const fs = require('fs')
 require('dotenv').config();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrpyt')
+const bcrypt = require('bcrypt')
 const saltRounds = 14
+const jwt = require('jsonwebtoken')
 
 
 
@@ -147,9 +148,71 @@ app.delete('/deleteAll', async (req, res) => {
 app.post('/createAdmin', async (req, res) => {
     try {
         const { username, password } = req.body
-        const hash = bcrypt.hashSync(password, saltRounds);
-    }
-    catch (err) {
-        
+
+        const hash = await bcrypt.hash(password, saltRounds)
+
+        const newUser = new user({
+            userName: username,
+            password: hash
+        })
+
+        await newUser.save()
+
+        res.json({
+             success: true,
+             message: "admin created"
+             })
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message })
     }
 })
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body
+        const foundUser = await user.findOne({ userName:username })
+        if (foundUser) {
+            const match = await bcrypt.compare(password, foundUser.password)
+            if (match){
+            const token = jwt.sign(
+            {
+                 userName:foundUser.userName,
+              
+
+            },
+            process.env.JWTSecret,
+            {expiresIn:'3h'}
+           
+        )
+        res.cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+             maxAge: 3 * 60 * 60 * 1000
+})
+         res.json({
+                success:true,
+                message:"login successful",
+                token:token
+            })
+            
+     
+
+
+
+
+                
+            }
+        }
+        else{
+            res.json({
+                success:false,
+                message:"user is not found"
+            })
+        }
+
+        
+        
+    }catch (err) {   
+        res.status(500).json({ success: false, error: err.message })
+    }
+}
+)
