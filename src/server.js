@@ -4,6 +4,8 @@ const path = require('path');
 const fs = require('fs')
 require('dotenv').config();
 const mongoose = require('mongoose');
+const bcrypt = require('bcrpyt')
+const saltRounds = 14
 
 
 
@@ -21,9 +23,16 @@ const itemSchematic = new mongoose.Schema({
     itemImage:{type:String, required:true},
     itemID:{type:String, required:true},
     itemDescription:{type:String, required:false},
-    ContactInfo:{type:String, required:true}
+    ContactInfo: { type: String, required: true },
+    success:{type:Boolean,required:false}
     
 })
+const userSchematic = new mongoose.Schema({
+    userName: { type: String, required: true },
+    password: { type: String, required:true}
+    
+})
+const user = mongoose.model('user',userSchematic)
 const item = mongoose.model("Item", itemSchematic)
 
 const storage = multer.diskStorage({
@@ -61,8 +70,9 @@ app.get("/list", async (req, res) => {
 app.get("/form", (req, res) => {
     res.render('form')
 })
-app.get("/admin", (req, res) => {
-    res.render('form')
+app.get("/admin", async (req, res) => {
+    const data = await item.find({success:false})
+    res.render('admin',{items:data})
 })
 
 app.listen(port, (req, res) => {
@@ -79,7 +89,8 @@ app.post('/form',upload.single('itemImageInput'), async(req, res) => {
             itemImage: req.file.path,
             itemID: Date.now().toString(),
             itemDescription: req.body.description,
-            ContactInfo: req.body.ContactInfo
+            ContactInfo: req.body.ContactInfo,
+            success:false
         })
         const save = await newItem.save().then(
         console.log("item save"))
@@ -99,7 +110,7 @@ app.post('/form',upload.single('itemImageInput'), async(req, res) => {
        console.log(err)
        res.json({
            success: false,
-           message:"error when uplaoding"
+           message:err
        })
     }
 
@@ -132,4 +143,13 @@ app.delete('/deleteAll', async (req, res) => {
         success:true,
         message:" deleted"
     })
+})
+app.post('/createAdmin', async (req, res) => {
+    try {
+        const { username, password } = req.body
+        const hash = bcrypt.hashSync(password, saltRounds);
+    }
+    catch (err) {
+        
+    }
 })

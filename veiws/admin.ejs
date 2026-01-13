@@ -10,40 +10,50 @@
     <div class="main">
         <nav class="navBar">
             <ul>
-                <li><a href="http://localhost:5000/form">form</a></li>
-                <li><a href="http://localhost:5000/list">list</a></li>
+                <li><a href="http://localhost:5000/form">Form</a></li>
+                <li><a href="http://localhost:5000/list">List</a></li>
                 <li><a href="http://localhost:5000">Home</a></li>
+
+                <li><a href="http://localhost:5000/Admin">Admin</a></li>
+
             </ul>
         </nav>
-        <form>
-            <label for="admin"></label>
-            <input type="text" id="text">
-            <button type="submit"></button>
+        <form id="adminForm">
+            <label for="admin">User Name </label>
+            <input type="text" id="userName" for="userNmae">
+            <label for="admin">Admin </label>
+            <input type="text" id="Admin">
+            <button type="submit">Verify</button>
         </form>
-        <% if(result.succes=true){%>
-            <% items.forEach(item => { %>
-                <div style="margin-bottom: 20px;">
-                  <h2>Item: <%= item.itemName %></h2>
-                  <p>Found by: <%= item.personName %></p>
-              
-                  <img 
-                    src="/<%= item.itemImage %>" 
-                    alt="item image"
-                    style="width:200px; height:auto;"
-                  >
-                </div>
-              <% }) %>
-
-            <%}%>
+        <div>
+       
+                <% items.forEach(item => { %>
+                    <div style="margin-bottom: 20px;">
+                      <h2 class="itemName">Item: <%= item.itemName %></h2>
+                      <p class="personName">Found by: <%= item.personName %></p>
+                      <p class="itemDescription">Description: <%= item.itemDescription %></p>
+                      <p class="ContactInfo">Contact Info: <%= item.ContactInfo %></p>
+                      <button>Accept</button>
+                      <button>Deny</button>
+                      
+                  
+                      <img 
+                        id="itemImage"
+                        src="/<%= item.itemImage %>" 
+                        alt="item image"
+                        style="width:200px; height:auto;"
+                      >
+                    </div>
+                <% }) %>
+            
+        </div>
 
         
     </div>
-    <div class=""></div>
-    <footer><a href="github.com/TylerThorneXtrls"><i class="bi bi-github"></i></a></footer>
 </body>
 <script>
     
-    const form = document.getElementById("form")
+    const form = document.getElementById("adminForm")
     form.addEventListener('submit', async ()=>{
         preventDefault()
         const formData = new FormData(form)
